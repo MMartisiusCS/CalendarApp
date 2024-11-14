@@ -1,25 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Basic HTML page for testing GitHub Pages hosting.">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Basic HTML page for testing GitHub Pages hosting." />
     <title>GitHub Pages Test</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f0f0f0;
-        }
-        h1 {
-            color: #333;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f0f0f0;
+      }
+      h1 {
+        color: #333;
+      }
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 20px;
+      }
+      #response {
+        margin-top: 20px;
+        font-size: 18px;
+        color: #555;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Hello, World! 🎉 Your GitHub Pages is live!</h1>
-</body>
+    <button id="apiButton">Call Java API</button>
+    <div id="response"></div>
+
+    <script>
+      // JavaScript function to call the API
+      document.getElementById("apiButton").addEventListener("click", async () => {
+        const responseDiv = document.getElementById("response");
+
+        try {
+          // Make a GET request to the local Java server
+          const response = await fetch("http://localhost:8080/hello");
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+
+          const text = await response.text();
+          responseDiv.textContent = `Response from API: ${text}`;
+        } catch (error) {
+          console.error("Error calling the API:", error);
+          responseDiv.textContent = `Error: ${error.message}`;
+        }
+      });
+    </script>
+  </body>
 </html>
